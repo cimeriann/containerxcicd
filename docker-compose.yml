@@ -5,3 +5,30 @@ services:
     build: .
     ports:
       - "8000:8000"
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "1"
+        max-size: "100k"
+
+
+  nginx:
+    restart: unless-stopped
+    image: nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+      # - "443:443"
+    # environment:
+    #   - CERTBOT_EMAIL=youremail@gmail.com
+    volumes:
+      - ./nginx:/etc/nginx/user_conf.d:ro
+      # - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100k"
+        max-file: "1"
