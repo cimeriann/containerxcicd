@@ -21,13 +21,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: fastppiwithnginx
+          images: olayinkaadebisi/fastapiwithnginx
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: fastppiwithnginx:latest
+          tags: olayinkaadebisi/fastapiwithnginx:latest
           labels: ${{ steps.meta.outputs.labels }}
   

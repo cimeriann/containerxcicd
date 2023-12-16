@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: fastppiwithnginx:latest
+    image: olayinkaadebisi/fastapiwithnginx:latest
     container_name: web
     ports:
       - "8000:8000"
