@@ -4,16 +4,28 @@ on:
   push:
     branches: [ main ]
 jobs:
-  linting:
+  build_and_push:
+    name: Push docker image to Docker Hub
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
+      - name: Checkout the repository
         uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          python-version: '3.11'
-      - name: install dependencies
-        run: python -m pip install --upgrade pip setuptools wheel pre-commit
-      - name: Linting
-        run: make linting
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+      - name: Extract metadata (labels, tags, etc.) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: FastApiWithNginx
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: FastApiWithNginx:latest
+          labels: ${{ steps.meta.outputs.labels }}
+  
