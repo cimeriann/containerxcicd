@@ -27,7 +27,7 @@ services:
       - ./nginx:/etc/nginx/user_conf.d:ro
       # - letsencrypt:/etc/letsencrypt
     depends_on:
-      - app
+      - web
     logging:
       driver: "json-file"
       options:
