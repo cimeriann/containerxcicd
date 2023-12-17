@@ -53,7 +53,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            docker compose down
+            docker-compose down
             docker rmi -f $(docker images -q)
-            docker compose pull
-            docker compose up -d
+            docker-compose pull
+            docker-compose up -d
